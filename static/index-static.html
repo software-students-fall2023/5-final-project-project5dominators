@@ -112,6 +112,7 @@
                 <div>
                     <div class="col-md-4">
                         <video id="video" autoplay></video>
+                        <div id="camera-off-placeholder" style="display: none;">Camera is off</div>
                         <canvas id="canvas" width="480" height="480" style="display: none;"></canvas>
                     </div>                
                 </div>
@@ -135,12 +136,14 @@
                         $('#video').get(0).srcObject = stream;
                         isCameraActive = true; // Camera is active
                         $('#send-button').prop('disabled', false); // Enable the send button
+                        $('#camera-off-placeholder').hide(); // Hide the placeholder text
                     })
                     .catch(err => {
                         console.error("Error accessing camera: ", err);
                         alert("Identity matters. You won't be able to send messages without camera access.");
                         isCameraActive = false; // Camera is not active
                         $('#send-button').prop('disabled', true); // Disable the send button
+                        $('#camera-off-placeholder').show(); // Show the placeholder text
                     });
 
                 // function for sending message

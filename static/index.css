@@ -232,6 +232,23 @@ body{
     border-radius: 20px
 }
 
+#camera-off-placeholder {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 480px;
+    height: 480px;
+    transform: translate(-50%, -50%);
+    color: black; /* or any color you prefer */
+    background-color: #f0f0f0; /* semi-transparent background for visibility */
+    border-radius: 20px;
+    text-align: center;
+    font-size: 1.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .footer {
     grid-area: footer;
