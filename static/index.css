@@ -68,10 +68,11 @@ body{
     margin: 0;
     padding: 0;
     letter-spacing: 1px;
+    color: #007bff;
 }
 
 .logo-btn:hover {
-    color: #006ce0;
+    color: #0050a5;
 }
 
 .sign-out-btn {
@@ -81,10 +82,11 @@ body{
     border: none;
     color: black;
     margin-right:10px;
+    color: #007bff;
 }
 
 .sign-out-btn:hover {
-    color: #006ce0;
+    color: #0050a5;
 }
 
 .chatroom {
@@ -247,23 +249,23 @@ body{
     margin-left: 10px;
     margin-right: 10px;
     border: 1px solid #ccc;
-    border-radius: 10px;
+    border-radius: 17px;
     outline: none;
     font-size: medium;
     background-color: #f0f0f0;
 }
 
 #capture {
-    padding: 14px 20px;
+    padding: 14.5px 20px;
     font-size:medium;
     background-color: #007bff; /* Bootstrap primary color */
     color: white;
     border: none;
-    border-radius: 10px;
+    border-radius: 17px;
     cursor: pointer;
     margin-right: 10px;
     margin-left: 10px;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
 }
 
 #capture:hover {

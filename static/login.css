@@ -1,0 +1,139 @@
+html {
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 0;
+}
+
+body{
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    font-family: Andalé Mono, monospace;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 0;
+    background-color: white;
+}
+
+h2{
+    text-align: center;
+    width: 100%;
+    margin: 0 0 30px 0; 
+}
+
+p{
+    text-align: center;
+    width: 100%;
+    margin: 0 0 30px 0; 
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1.5fr 0.95fr 1.5fr;
+    grid-template-rows: 6em auto 4.5em;
+    grid-row-gap: 0;
+    grid-column-gap: 0;
+    position: fixed;
+    grid-template-areas:
+    "header header header"
+    "left login right"
+    "footer footer footer";
+    height: 100%;
+    width: 100%;
+    margin: 0;
+
+}
+
+.header {
+    grid-area: header;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background-color: white;
+    border-bottom: 1px solid #ccc;
+    margin: 0;
+    font-size: large;
+}
+
+.logo{
+    margin: 0;
+}
+
+.logo-btn {
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #007bff;
+    margin: 0;
+    font-size:2.5em;
+    font-weight: bold;
+    font-family: Andalé Mono, monospace;
+    margin: 0;
+    padding: 0;
+    letter-spacing: 1px;
+}
+
+.logo-btn:hover {
+    color: #0050a5;
+}
+
+
+.login {
+    grid-area: login;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background-color: white;
+    margin: 0;
+    font-size: large;
+
+}
+
+form{
+    width: 100%;
+
+}
+
+
+#username {
+    padding: 13px;
+
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    outline: none;
+    font-size: medium;
+    background-color: white;
+    width: calc(100% - 26px);
+    display: block;
+    margin-bottom: 20px;
+}
+
+#login-btn {
+    padding: 15px 13px;
+    font-size:medium;
+    background-color: #007bff; /* Bootstrap primary color */
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    margin: 0;
+    letter-spacing: 1px;
+    width: 100%;
+    display: block;
+}
+
+#login-btn:hover {
+    background-color: #006ce0; /* Darker shade on hover */
+}
+
