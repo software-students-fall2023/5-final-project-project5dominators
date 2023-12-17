@@ -20,14 +20,15 @@ body{
     bottom: 0;
     right: 0;
     padding: 0;
+    background-color: #ccc;
 }
 
 .grid-container {
     display: grid;
     grid-template-columns: 5.8fr 4.2fr;
     grid-template-rows: 6em auto 4.5em;
-    grid-row-gap: 0;
-    grid-column-gap: 0;
+    grid-row-gap: 1px;
+    grid-column-gap: 1px;
     position: fixed;
     grid-template-areas:
     "header header"
@@ -36,6 +37,7 @@ body{
     height: 100%;
     width: 100%;
     margin: 0;
+
 }
 
 .header {
@@ -44,15 +46,32 @@ body{
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
-    background-color: #f8f8f8;
+    background-color: white;
+    /* border: 1px solid #ccc; */
     margin: 0;
     font-size: large;
 }
 
 .logo{
-    font-size:xx-large;
-    font-weight: bold;
     margin-left: 10px;
+}
+
+.logo-btn {
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: black;
+    margin-right:10px;
+    font-size:2.5em;
+    font-weight: bold;
+    font-family: Andalé Mono, monospace;
+    margin: 0;
+    padding: 0;
+    letter-spacing: 1px;
+}
+
+.logo-btn:hover {
+    color: #006ce0;
 }
 
 .sign-out-btn {
@@ -64,23 +83,69 @@ body{
     margin-right:10px;
 }
 
+.sign-out-btn:hover {
+    color: #006ce0;
+}
+
 .chatroom {
     grid-area: nav;
-    background-color: #e8e8e8;
+    background-color: white;
     padding: 1rem;
-    overflow-y: auto; /* Makes this box scrollable */
+    overflow-y: scroll; /* Makes this box scrollable */
     margin: 0;
     padding-bottom: 0;
     display: flex;
-    flex-direction: column-reverse
+    flex-direction: column-reverse;
+    box-sizing: content-box;
+    
 }
 
+/* For Chrome/Safari */
+/* Customizes the scrollbar track */
+.chatroom::-webkit-scrollbar-track {
+    background-color: white; /* Light grey track */
+}
 
+.chatroom::-webkit-scrollbar-track:hover {
+    background-color: #f0f0f0; /* Darker grey track on hover */
+}
+
+/* Customizes the scrollbar handle */
+.chatroom::-webkit-scrollbar-thumb {
+    background-color: white; /* Darker grey handle */
+    border-radius: 20px; /* Rounded corners for the handle */
+    /* border: 0px solid #f0f0f0;  */
+}
+
+/* Customizes the scrollbar width */
+.chatroom::-webkit-scrollbar {
+    width: 7px; /* Width of the scrollbar */
+}
+
+/* Customizes the scrollbar button */
+.chatroom::-webkit-scrollbar-button {
+    display: none; /* Typically not needed, so they are removed */
+}
+
+.chatroom:hover::-webkit-scrollbar-thumb {
+    background-color: #c6c6c6; /* Or any color you wish */
+}
+
+/* For firefox */
+.chatroom {
+    scrollbar-color: white white; /* thumb and track color */
+    scrollbar-width: thin; /* 'auto', 'thin', 'none' */
+}
+
+.chatroom:hover {
+    scrollbar-color: #c6c6c6 white; /* thumb and track color */
+
+}
 
 .message {
     display: flex;
     align-items: flex-start;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     margin-left: 10px;
     margin-right: 10px;
 }
@@ -88,13 +153,13 @@ body{
 .user-photo {
     width: 110px; /* Adjust as needed */
     height: 110px; /* Adjust as needed */
-    border-radius: 5px;
+    border-radius: 15px;
     margin-right: 15px;
 }
 
 .message-content {
     background-color: #f0f0f0; /* Light grey background */
-    border-radius: 15px;
+    border-radius: 25px;
     margin-top:1px;
     padding: 10px;
     flex-grow: 1;
@@ -122,6 +187,10 @@ body{
     margin-right:15px;
     padding-top:0;
     margin-top:0;
+    color: #bababa;
+}
+
+.delete-btn:hover {
     color: red;
 }
 
@@ -140,13 +209,14 @@ body{
     align-items: center;
     position: relative;
     margin: 0;
+    background-color: white;
 }
 .col-md-4{
     width: 480px; /* Width of the square container */
     height: 480px; /* Height of the square container */
     overflow: hidden; /* Hide the parts of the video that overflow */
     position: relative;
-    border-radius: 10px; /* This will make it a circle; adjust as needed for rounded corners */
+    border-radius: 20px; /* This will make it a circle; adjust as needed for rounded corners */
     /* box-shadow: 0px 0px 10px #000;  */
 }
 
@@ -157,13 +227,14 @@ body{
     transform: translate(-50%, -50%);
     min-width: 100%;
     min-height: 100%;
-    border-radius: 10px
+    border-radius: 20px
 }
 
 
 .footer {
     grid-area: footer;
-    background-color: #f8f8f8;
+    background-color: white;
+    /* border: 1px solid #ccc; */
     padding: 1rem;
     display: flex;
     align-items: center;
@@ -176,9 +247,10 @@ body{
     margin-left: 10px;
     margin-right: 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 10px;
     outline: none;
     font-size: medium;
+    background-color: #f0f0f0;
 }
 
 #capture {
@@ -187,13 +259,14 @@ body{
     background-color: #007bff; /* Bootstrap primary color */
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     margin-right: 10px;
     margin-left: 10px;
+    letter-spacing: 1px;
 }
 
 #capture:hover {
-    background-color: #0056b3; /* Darker shade on hover */
+    background-color: #006ce0; /* Darker shade on hover */
 }
 

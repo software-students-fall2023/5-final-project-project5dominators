@@ -12,9 +12,16 @@
     <body>
         <div class="grid-container">
             <div class="header">
-                <div class="logo">Snap&Chat</div>
+                <div class="logo">
+                    <a href="https://github.com/software-students-fall2023/5-final-project-project5dominators"> 
+                        <button class="logo-btn">Snap&Chat</button>
+                    </a>
+                </div>
+
                 <div class="sign-out">
-                    <button class="sign-out-btn"><i class="fas fa-sign-out-alt"></i></button>
+                    <a href="login-static.html">
+                        <button class="sign-out-btn"><i class="fas fa-sign-out-alt"></i></button>
+                    </a>
                 </div>
             </div>
 
@@ -24,6 +31,7 @@
                 <div> 
 
                     <!-- TODO: Populate the messages dynamically from database by using a loop -->
+                    <!-- TODO: Implment delete button to delete message from database-->
 
                     <div class="message">
                         <img src="placeholder.jpg" alt="User" class="user-photo">
@@ -111,7 +119,7 @@
 
             <div class="footer">
                 <input type="text" id="message-input" placeholder="Type a message...">
-                <button id="capture">Send/Snap</button>
+                <button id="capture">Snap&Send</button>
             </div>
         </div>
 
@@ -119,101 +127,94 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
         <script>
-            // Scroll to the bottom of the chatroom
-            document.addEventListener("DOMContentLoaded", function() {
-                var chatContainer = document.getElementByClassName('chatroom');
-                chatContainer.scrollTo(0, chatContainer.scrollHeight);
-            });
+            $(document).ready(function() {
+        
+                // Access the user's camera and display the feed
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(stream => {
+                        $('#video').get(0).srcObject = stream;
+                        isCameraActive = true; // Camera is active
+                        $('#send-button').prop('disabled', false); // Enable the send button
+                    })
+                    .catch(err => {
+                        console.error("Error accessing camera: ", err);
+                        alert("Identity matters. You won't be able to send messages without camera access.");
+                        isCameraActive = false; // Camera is not active
+                        $('#send-button').prop('disabled', true); // Disable the send button
+                    });
 
-            // Access the user's camera and display the feed
-            navigator.mediaDevices.getUserMedia({ video: true })
-                .then(stream => {
-                    const video = document.getElementById('video');
-                    video.srcObject = stream;
-                    isCameraActive = true; // Camera is active
-                    $('#send-button').prop('disabled', false); // Enable the send button
-                })
-                .catch(err => {
-                    console.error("Error accessing camera: ", err);
-                    alert("Identity matters. You won't be able to send messages without camera access. ")
-                    isCameraActive = false; // Camera is not active
+                // function for sending message
+                function sendMessageImage() {
+                    var canvas = $('#canvas').get(0);
+                    var context = canvas.getContext('2d');
+                    var video = $('#video').get(0);
+                    var message = $('#message-input').val().trim();
+        
+                    if (!isCameraActive) {
+                        alert("Camera is not active. Please refresh and allow camera access to send messages.");
+                        return; // Stop the function from proceeding further
+                    }
+        
+                    if (message.length === 0) {
+                        alert("Please enter a message."); // You can replace this with a more subtle notification
+                        return; // Stop the function from proceeding further
+                    }
+        
+                    // Calculate the dimensions to crop the video to a square
+                    let videoWidth = video.videoWidth;
+                    let videoHeight = video.videoHeight;
+                    let startX = 0;
+                    let startY = 0;
+                    let squareLength = Math.min(videoWidth, videoHeight);
+        
+                    if (videoWidth > videoHeight) {
+                        startX = (videoWidth - videoHeight) / 2;
+                    } else {
+                        startY = (videoHeight - videoWidth) / 2;
+                    }
+        
+                    // Draw the cropped video frame to the canvas
+                    context.drawImage(video, startX, startY, squareLength, squareLength, 0, 0, canvas.width, canvas.height);
+        
+                    // Convert canvas to Data URL
+                    var imageDataUrl = canvas.toDataURL('image/png');
+        
+                    // Send the image data to the backend
+                    $.ajax({
+                        type: "POST",
+                        url: "/path/to/backend", // Replace with your server URL
+                        data: {
+                            image: imageDataUrl,
+                            message: message
+                        },
+                        success: function(response) {
+                            console.log("Image&Message sent successfully");
+                        },
+                        error: function(error) {
+                            console.error("Error sending image or message", error);
+                        }
+                    });
+        
+                    // Clear the input field
+                    $('#message-input').val('');
                     $('#send-button').prop('disabled', true); // Disable the send button
-                });
-    
-            // Capture the image and send it to the backend
-            document.getElementById('capture').addEventListener('click', function() {
-                const canvas = document.getElementById('canvas');
-                const context = canvas.getContext('2d');
-                const video = document.getElementById('video');
-                var input = document.getElementById('message-input');
-                var message = input.value.trim();
+                }
+        
+                // When user clicks the snap&send button
+                $('#capture').click(sendMessageImage);
 
-                if (!isCameraActive) {
-                    alert("Camera is not active. Please refresh and allow camera access to send messages.");
-                    return; // Stop the function from proceeding further
-                }
-
-                if (message.length === 0) {
-                    // If the message is empty, do not send it and possibly alert the user
-                    alert("Please enter a message."); // You can replace this with a more subtle notification
-                    return; // Stop the function from proceeding further
-                }
-    
-                // Calculate the dimensions to crop the video to a square
-                let videoWidth = video.videoWidth;
-                let videoHeight = video.videoHeight;
-                let startX = 0;
-                let startY = 0;
-                let squareLength = Math.min(videoWidth, videoHeight);
-    
-                if (videoWidth > videoHeight) {
-                    startX = (videoWidth - videoHeight) / 2;
-                } else {
-                    startY = (videoHeight - videoWidth) / 2;
-                }
-    
-                // Draw the cropped video frame to the canvas
-                context.drawImage(video, startX, startY, squareLength, squareLength, 0, 0, canvas.width, canvas.height);
-    
-                // Convert canvas to Data URL
-                var imageDataUrl = canvas.toDataURL('image/png');
-    
-                // Send the image data to the backend
-                $.ajax({
-                    type: "POST",
-                    url: "/path/to/backend", // Replace with your server URL
-                    data: {
-                        image: imageDataUrl
-                    },
-                    success: function(response) {
-                        console.log("Image sent successfully");
-                    },
-                    error: function(error) {
-                        console.error("Error sending image", error);
+                $('#message-input').keypress(function(e) {
+                    if (e.which == 13) { // 13 is the Enter key's keycode
+                        e.preventDefault(); // Prevent the default action (form submission)
+                        sendMessageImage();
                     }
                 });
-
-                // Send the message to the backend
-                $.ajax({
-                    type: "POST",
-                    url: "/path/to/backend", // Replace with your server URL
-                    data: {
-                        message: message
-                    },
-                    success: function(response) {
-                        console.log("Message sent successfully");
-                    },
-                    error: function(error) {
-                        console.error("Error sending message", error);
-                    }
-                });
-
-                // Clear the input field
-                input.value = "";
-                $('#send-button').prop('disabled', true); // Disable the send button
 
             });
+
+
         </script>
+        
 
     </body>
 </html>
