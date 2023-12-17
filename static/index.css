@@ -24,8 +24,8 @@ body{
 
 .grid-container {
     display: grid;
-    grid-template-columns: 6fr 4fr;
-    grid-template-rows: 7em auto 4em;
+    grid-template-columns: 5.8fr 4.2fr;
+    grid-template-rows: 6em auto 4.5em;
     grid-row-gap: 0;
     grid-column-gap: 0;
     position: fixed;
@@ -52,6 +52,16 @@ body{
 .logo{
     font-size:xx-large;
     font-weight: bold;
+    margin-left: 10px;
+}
+
+.sign-out-btn {
+    font-size: xx-large;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: black;
+    margin-right:10px;
 }
 
 .chatroom {
@@ -60,6 +70,7 @@ body{
     padding: 1rem;
     overflow-y: auto; /* Makes this box scrollable */
     margin: 0;
+    padding-bottom: 0;
     display: flex;
     flex-direction: column-reverse
 }
@@ -70,18 +81,21 @@ body{
     display: flex;
     align-items: flex-start;
     margin-bottom: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .user-photo {
-    width: 120px; /* Adjust as needed */
-    height: 120px; /* Adjust as needed */
+    width: 110px; /* Adjust as needed */
+    height: 110px; /* Adjust as needed */
     border-radius: 5px;
-    margin-right: 10px;
+    margin-right: 15px;
 }
 
 .message-content {
     background-color: #f0f0f0; /* Light grey background */
     border-radius: 15px;
+    margin-top:1px;
     padding: 10px;
     flex-grow: 1;
     word-wrap: break-word; /* Ensures text wraps inside the bubble */
@@ -91,22 +105,30 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 15px;
 }
 
 .username {
     font-weight: bold;
+    font-size: large;
 }
 
 .delete-btn {
     cursor: pointer;
     background: none;
     border: none;
+    font-size: large;
+    margin-right:15px;
+    padding-top:0;
+    margin-top:0;
     color: red;
 }
 
 .message-text {
-    margin: 0;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    line-height: 1.5;
     /* You can add more styling for the text as needed */
 }
 
@@ -146,25 +168,29 @@ body{
     display: flex;
     align-items: center;
     margin: 0;
-    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.2);
 }
 
 #message-input {
     flex: 1;
-    padding: 10px;
+    padding: 13px;
+    margin-left: 10px;
     margin-right: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     outline: none;
+    font-size: medium;
 }
 
 #capture {
-    padding: 10px 20px;
+    padding: 14px 20px;
+    font-size:medium;
     background-color: #007bff; /* Bootstrap primary color */
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-right: 10px;
+    margin-left: 10px;
 }
 
 #capture:hover {
