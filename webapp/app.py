@@ -3,6 +3,7 @@ from pymongo import MongoClient
 from bson import ObjectId
 from bson import json_util
 from datetime import datetime
+import numpy as np
 import base64
 import json
 import cv2
@@ -69,10 +70,15 @@ def get_messages():
     # Retrieve all messages and sort them in ascending order based on timestamp
     messages = list(db.communication.find().sort('timestamp', 1))
 
-    # Convert MongoDB objects to JSON
-    messages_json = json.loads(json_util.dumps(messages))
+    # Manually convert each message to a JSON-friendly format
+    messages_json = []
+    for message in messages:
+        message['_id'] = str(message['_id'])  # Convert ObjectId to string
+        message['timestamp'] = str(message['timestamp'])  # Convert timestamp to string if necessary
+        messages_json.append(message)
 
     return jsonify(messages_json)
+
 
 @app.route('/delete_message/<message_id>', methods=['POST'])
 def delete_message(message_id):
@@ -83,6 +89,45 @@ def delete_message(message_id):
         return jsonify({'status': 'success', 'message': 'Message deleted'})
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)})
+
+@app.route('/convert_to_sketch', methods=['POST'])
+def convert_to_sketch():
+    username = session.get('username')
+    message = request.form['message']
+    timestamp = datetime.now()
+    # Extract the image from the request
+    image_data = request.form['image']
+    # Decode the image from base64
+    encoded_data = image_data.split(',')[1]
+    nparr = np.fromstring(base64.b64decode(encoded_data), np.uint8)
+    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
+    # Convert to grayscale
+    gray_image = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    # Apply Gaussian blur
+    blurred_image = cv2.GaussianBlur(gray_image, (5, 5), 0)
+    # Apply Canny Edge Detector
+    edges = cv2.Canny(blurred_image, 100, 200)
+
+    # Encode the result
+    _, buffer = cv2.imencode('.jpg', edges)
+    sketch_base64 = base64.b64encode(buffer).decode('utf-8')
+    new_message = {
+        'username': username,
+        'message': message,
+        'photo': 'data:image/jpeg;base64,' + sketch_base64,
+        'timestamp': timestamp
+        }
+    result = db.communication.insert_one(new_message)
+
+    # Convert the ObjectId to a string
+    new_message['_id'] = str(result.inserted_id)
+
+    # Convert the timestamp to a string or a format that can be JSON serialized
+    new_message['timestamp'] = str(timestamp)
+    return jsonify(new_message)
+
+
 
 @app.route('/logout')
 def logout():
