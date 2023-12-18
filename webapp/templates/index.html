@@ -17,6 +17,7 @@
                         <button class="logo-btn">Snap&Chat</button>
                     </a>
                     <button id="sketch-send">Sketch & Send</button>
+                    <button id="cartoon-send">Cartoon & Send</button>
                 </div>
 
                 <div class="sign-out">
@@ -184,6 +185,56 @@
                     $('#message-input').val('');
                 }
 
+                function cartoonAndSendMessage() {
+                    var canvas = $('#canvas').get(0);
+                    var context = canvas.getContext('2d');
+                    var video = $('#video').get(0);
+                    var message = $('#message-input').val().trim();
+
+                    if (!video.srcObject || !video.srcObject.active) {
+                        alert("Camera is not active. Please refresh and allow camera access to send messages.");
+                        return;
+                    }
+
+                    if (message.length === 0) {
+                        alert("Please enter a message.");
+                        return;
+                    }
+
+                    let videoWidth = video.videoWidth;
+                    let videoHeight = video.videoHeight;
+                    let startX = 0;
+                    let startY = 0;
+                    let squareLength = Math.min(videoWidth, videoHeight);
+
+                    if (videoWidth > videoHeight) {
+                        startX = (videoWidth - videoHeight) / 2;
+                    } else {
+                        startY = (videoHeight - videoWidth) / 2;
+                    }
+
+                    context.drawImage(video, startX, startY, squareLength, squareLength, 0, 0, canvas.width, canvas.height);
+                    var imageDataUrl = canvas.toDataURL('image/png');
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/convert_to_cartoon",  // The only difference is the URL
+                        data: {
+                            image: imageDataUrl,
+                            message: message
+                        },
+                        success: function(response) {
+                            console.log("Response from convert_to_cartonn:", response);
+                            appendNewMessage(response.photo, response.message, response.username, response._id);
+                        },
+                        error: function(error) {
+                            console.error("Error sending image for cartooning", error);
+                        }
+                    });
+
+                    $('#message-input').val('');
+                }
+
 
             //function for the delete button
             function deleteMessage(messageId) {
@@ -314,6 +365,8 @@
         
                 $('#capture').click(sendMessageImage);
                 $('#sketch-send').click(sketchAndSendMessage);
+                $('#cartoon-send').click(cartoonAndSendMessage);
+
         
                 $('#message-input').keypress(function(e) {
                     if (e.which == 13) {
