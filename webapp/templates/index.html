@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="sign-out">
-                    <a href="login-static.html">
+                    <a href="{{ url_for('logout') }}">
                         <button class="sign-out-btn"><i class="fas fa-sign-out-alt"></i></button>
                     </a>
                 </div>
@@ -132,95 +132,128 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
         <script>
-            $(document).ready(function() {
+            //function for the delete button
+            function deleteMessage(messageId) {
+                console.log("Deleting message with ID:", messageId);
+                $.ajax({
+                    type: "POST",
+                    url: `/delete_message/${messageId}`,
+                    success: function(response) {
+                        console.log("Message deleted successfully");
+                        $(`#message-${messageId}`).remove(); // Remove the message element from the chatroom
+                    },
+                    error: function(error) {
+                        console.error("Error deleting message", error);
+                    }
+                });
+            }
+
+
+            var lastMessageTimestamp = 0; // Initialize the timestamp
         
-                // Access the user's camera and display the feed
+            function fetchAndDisplayMessages() {
+                    $.ajax({
+                        url: '/get_messages',
+                        method: 'GET',
+                        success: function(response) {
+                            console.log("Fetched messages: ", response); 
+                            const chatroomDiv = $('.chatroom > div');
+                            response.forEach(function(message) {
+                                appendNewMessage(`${message.photo}`, message.message, message.username, message._id);
+                            });
+                        },
+                        error: function() {
+                            console.error('Error fetching messages');
+                        }
+                    });
+                }
+        
+            function sendMessageImage() {
+                var canvas = $('#canvas').get(0);
+                var context = canvas.getContext('2d');
+                var video = $('#video').get(0);
+                var message = $('#message-input').val().trim();
+        
+                if (!video.srcObject || !video.srcObject.active) {
+                    alert("Camera is not active. Please refresh and allow camera access to send messages.");
+                    return;
+                }
+        
+                if (message.length === 0) {
+                    alert("Please enter a message.");
+                    return;
+                }
+        
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                var imageDataUrl = canvas.toDataURL('image/png');
+        
+                $.ajax({
+                    type: "POST",
+                    url: "/post_message",
+                    data: {
+                        image: imageDataUrl,
+                        message: message
+                    },
+                    // On successful sending of a new message
+                    success: function(response) {
+                            console.log("Response from post_message:", response);
+                            appendNewMessage(response.photo, response.message, response.username, response._id);
+                        },
+                    error: function(error) {
+                        console.error("Error sending image or message", error);
+                    }
+                });
+        
+                $('#message-input').val('');
+            }
+        
+            function appendNewMessage(imageDataUrl, message, username, messageId) {
+                console.log("Appending message with ID:", messageId);
+                const messageIdAttribute = messageId ? `id="message-${messageId}"` : '';
+                const deleteButton = messageId ? `<button class="delete-btn" onclick="deleteMessage('${messageId}')"><i class="fa fa-trash"></i></button>` : '';
+                
+                const chatroomDiv = $('.chatroom > div');
+                const messageHtml = `
+                    <div class="message" ${messageIdAttribute}>
+                        <img src="${imageDataUrl}" alt="User" class="user-photo">
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span class="username">${username}</span>
+                                ${deleteButton}
+                            </div>
+                            <p class="message-text">${message}</p>
+                        </div>
+                    </div>`;
+                chatroomDiv.append(messageHtml);
+            }
+
+
+            $(document).ready(function() {
+                //fetch and load
+                fetchAndDisplayMessages();
                 navigator.mediaDevices.getUserMedia({ video: true })
                     .then(stream => {
                         $('#video').get(0).srcObject = stream;
-                        isCameraActive = true; // Camera is active
-                        $('#send-button').prop('disabled', false); // Enable the send button
-                        $('#camera-off-placeholder').hide(); // Hide the placeholder text
                     })
                     .catch(err => {
                         console.error("Error accessing camera: ", err);
-                        alert("Identity matters. You won't be able to send messages without camera access.");
-                        isCameraActive = false; // Camera is not active
-                        $('#send-button').prop('disabled', true); // Disable the send button
-                        $('#camera-off-placeholder').show(); // Show the placeholder text
-                    });
-
-                // function for sending message
-                function sendMessageImage() {
-                    var canvas = $('#canvas').get(0);
-                    var context = canvas.getContext('2d');
-                    var video = $('#video').get(0);
-                    var message = $('#message-input').val().trim();
-        
-                    if (!isCameraActive) {
-                        alert("Camera is not active. Please refresh and allow camera access to send messages.");
-                        return; // Stop the function from proceeding further
-                    }
-        
-                    if (message.length === 0) {
-                        alert("Please enter a message."); // You can replace this with a more subtle notification
-                        return; // Stop the function from proceeding further
-                    }
-        
-                    // Calculate the dimensions to crop the video to a square
-                    let videoWidth = video.videoWidth;
-                    let videoHeight = video.videoHeight;
-                    let startX = 0;
-                    let startY = 0;
-                    let squareLength = Math.min(videoWidth, videoHeight);
-        
-                    if (videoWidth > videoHeight) {
-                        startX = (videoWidth - videoHeight) / 2;
-                    } else {
-                        startY = (videoHeight - videoWidth) / 2;
-                    }
-        
-                    // Draw the cropped video frame to the canvas
-                    context.drawImage(video, startX, startY, squareLength, squareLength, 0, 0, canvas.width, canvas.height);
-        
-                    // Convert canvas to Data URL
-                    var imageDataUrl = canvas.toDataURL('image/png');
-        
-                    // Send the image data to the backend
-                    $.ajax({
-                        type: "POST",
-                        url: "/post_message", // Replace with your server URL
-                        data: {
-                            image: imageDataUrl,
-                            message: message
-                        },
-                        success: function(response) {
-                            console.log("Image&Message sent successfully");
-                        },
-                        error: function(error) {
-                            console.error("Error sending image or message", error);
-                        }
+                        alert("Camera access is needed to send messages.");
+                        $('#camera-off-placeholder').show();
                     });
         
-                    // Clear the input field
-                    $('#message-input').val('');
-                    $('#send-button').prop('disabled', true); // Disable the send button
-                }
-        
-                // When user clicks the snap&send button
                 $('#capture').click(sendMessageImage);
-
+        
                 $('#message-input').keypress(function(e) {
-                    if (e.which == 13) { // 13 is the Enter key's keycode
-                        e.preventDefault(); // Prevent the default action (form submission)
+                    if (e.which == 13) {
+                        e.preventDefault();
                         sendMessageImage();
                     }
                 });
-
+        
+                
             });
-
-
         </script>
+        
         
 
     </body>
