@@ -127,6 +127,55 @@ def convert_to_sketch():
     new_message['timestamp'] = str(timestamp)
     return jsonify(new_message)
 
+@app.route('/convert_to_cartoon', methods=['POST'])
+def convert_to_cartoon():
+    username = session.get('username')
+    message = request.form['message']
+    timestamp = datetime.now()
+    
+    # Extract the image from the request
+    image_data = request.form['image']
+    
+    # Decode the image from base64
+    encoded_data = image_data.split(',')[1]
+    nparr = np.fromstring(base64.b64decode(encoded_data), np.uint8)
+    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
+    # Convert to grayscale
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    
+    # Apply median blur
+    gray_blur = cv2.medianBlur(gray, 5)
+    
+    # Retrieve edges using adaptive threshold
+    edges = cv2.adaptiveThreshold(gray_blur, 255, 
+                                    cv2.ADAPTIVE_THRESH_MEAN_C, 
+                                    cv2.THRESH_BINARY, 9, 9)
+    
+    # Apply bilateral filter to get cartoonish look
+    color = cv2.bilateralFilter(img, 9, 300, 300)
+    
+    # Combine edges and color
+    cartoon = cv2.bitwise_and(color, color, mask=edges)
+
+    # Encode the result
+    _, buffer = cv2.imencode('.jpg', cartoon)
+    cartoon_base64 = base64.b64encode(buffer).decode('utf-8')
+
+    new_message = {
+        'username': username,
+        'message': message,
+        'photo': 'data:image/jpeg;base64,' + cartoon_base64,
+        'timestamp': timestamp
+    }
+    result = db.communication.insert_one(new_message)
+
+    # Convert the ObjectId to a string
+    new_message['_id'] = str(result.inserted_id)
+
+    # Convert the timestamp to a string for JSON serialization
+    new_message['timestamp'] = str(timestamp)
+    return jsonify(new_message)
 
 
 @app.route('/logout')
