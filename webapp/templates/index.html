@@ -16,7 +16,6 @@
                     <a href="https://github.com/software-students-fall2023/5-final-project-project5dominators"> 
                         <button class="logo-btn">Snap&Chat</button>
                     </a>
-                    <button id="cartoon-send">Cartoon & Send</button>
                 </div>
 
                 <div class="sign-out">
@@ -366,18 +365,31 @@
                         alert("Camera access is needed to send messages.");
                         $('#camera-off-placeholder').show();
                     });
-        
-                $('#capture').click(sendMessageImage);
-                $('#sketch-send').click(sketchAndSendMessage);
-        
-                $('#message-input').keypress(function(e) {
+                
+
+
+                $('#capture').click(function() {
+                    if ($('#option-checkbox').is(':checked')) {
+                        // TODO: replace the function here to swap
+                        sketchAndSendMessage();
+                        //cartoonAndSendMessage();
+                    } else {
+                        sendMessageImage();
+                    }
+                });
+                
+
+                $(document).keypress(function(e) {
                     if (e.which == 13) {
-                        e.preventDefault();
                         if ($('#option-checkbox').is(':checked')) {
+                            // TODO: replace the function here as well
                             sketchAndSendMessage();
+                            //cartoonAndSendMessage();
+                            
                         } else {
                             sendMessageImage();
                         }
+                        e.preventDefault();
                     }
                 });
         
