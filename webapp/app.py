@@ -24,12 +24,11 @@ def login():
     username = request.form['username']
     user_exists = users.find_one({'username': username})
 
-    if user_exists:
-        # Handle case where username is taken
-        return render_template('login.html', error='Username taken, please choose another!')
+    if not user_exists:
+        users.insert_one({'username': username})
 
     # Username is available, proceed to store in the database
-    users.insert_one({'username': username})
+    
     session['username'] = username  
     return redirect(url_for('main'))
 
