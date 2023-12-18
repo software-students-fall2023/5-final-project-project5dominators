@@ -13,28 +13,32 @@
     <body>
         <div class="grid-container">
             <div class="header">
-                <div class="logo">
-                    <a href="https://github.com/software-students-fall2023/5-final-project-project5dominators"> 
-                        <button class="logo-btn">Snap&Chat</button>
-                    </a>
-                </div>
             </div>
 
             <div class="login">
-                <h2>Welcome to the REAL Snapchat!</h2>
-                <p>This is a chatroom where everyone has to send a selfie along with their texts. No exemptions! </p>
+                <div class="wrapper">
 
-                <!-- TODO: Replace action with backend login processing -->
-                <form action="/login" method="post"> 
-                    <input type="text" id="username" name="username" placeholder="Username" required>
-                    <button type="submit" id="login-btn">Login</button>
-                </form>
-                {% if error %}
+                    <div class="logo">
+                        <a> 
+                            <button class="logo-btn">Snap&Chat</button>
+                        </a>
+                    </div>
+
+
+                    <!-- <h2>Welcome to the REAL Snapchat!</h2> -->
+                    <!-- <p>Welcome! </p> -->
+    
+                    <!-- TODO: Replace action with backend login processing -->
+                    <form action="/login" method="post"> 
+                        <input type="text" id="username" name="username" placeholder="Username" required>
+                        <button type="submit" id="login-btn">Join</button>
+                    </form>
+                    {% if error %}
                         <p id="error-message" style="color: red;">{{ error }}</p>
-                {% endif %}
+                    {% endif %}
+
+                </div>
             </div>
-
-
         </div>
         
 

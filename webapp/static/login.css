@@ -23,21 +23,10 @@ body{
     background-color: white;
 }
 
-h2{
-    text-align: center;
-    width: 100%;
-    margin: 0 0 30px 0; 
-}
-
-p{
-    text-align: center;
-    width: 100%;
-    margin: 0 0 30px 0; 
-}
 
 .grid-container {
     display: grid;
-    grid-template-columns: 1.5fr 0.95fr 1.5fr;
+    grid-template-columns: auto 20em auto;
     grid-template-rows: 6em auto 4.5em;
     grid-row-gap: 0;
     grid-column-gap: 0;
@@ -59,31 +48,8 @@ p{
     align-items: center;
     padding: 1rem;
     background-color: white;
-    border-bottom: 1px solid #ccc;
     margin: 0;
     font-size: large;
-}
-
-.logo{
-    margin: 0;
-}
-
-.logo-btn {
-    cursor: pointer;
-    background: none;
-    border: none;
-    color: #007bff;
-    margin: 0;
-    font-size:2.5em;
-    font-weight: bold;
-    font-family: Andalé Mono, monospace;
-    margin: 0;
-    padding: 0;
-    letter-spacing: 1px;
-}
-
-.logo-btn:hover {
-    color: #0050a5;
 }
 
 
@@ -93,16 +59,67 @@ p{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 1rem;
     background-color: white;
     margin: 0;
     font-size: large;
+    width: 100%;
+    position:absolute;
+}
+
+.wrapper {
+    padding: 60px 50px 60px 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0 0;
+    margin-top: 70%;
+    border : 1px solid #ddd;   
+    border-radius: 40px;
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.2);
+    /* background-color: #f9f9f9; */
+}
+
+.logo{
+    margin:0;
+    margin-bottom: 60px;
+    padding: 0;
+}
+
+.logo-btn {
+    background: none;
+    border: none;
+    color: #007bff;
+    font-size:2.9em;
+    font-weight: bold;
+    font-family: Andalé Mono, monospace;
+    margin: 0;
+    padding: 0;
+    letter-spacing: 1px;
+}
+
+
+h2{
+    font-size: 1.7em;
+    text-align: center;
+    width: 100%;
+    margin: 0 0 30px 0; 
+    padding: 0 30px;
+    width: 100%;
+}
+
+p{
+    font-size: 0.95em;
+    letter-spacing: 0.01px;
+    text-align: center;
+    width: 100%;
+    margin: 0 0 40px 0; 
 
 }
 
 form{
-    width: 100%;
-
+    width: 100%
 }
 
 

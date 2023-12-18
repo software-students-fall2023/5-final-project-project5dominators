@@ -124,6 +124,11 @@
 
             <div class="footer">
                 <input type="text" id="message-input" placeholder="Type a message...">
+                <label class="custom-checkbox">
+                    Filter
+                    <input type="checkbox" id="option-checkbox">
+                    <span class="checkmark"></span>
+                </label>
                 <button id="capture">Snap&Send</button>
             </div>
         </div>
@@ -132,21 +137,128 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
         <script>
+                //function for sketchy message
+                function sketchAndSendMessage() {
+                    var canvas = $('#canvas').get(0);
+                    var context = canvas.getContext('2d');
+                    var video = $('#video').get(0);
+                    var message = $('#message-input').val().trim();
+
+                    if (!video.srcObject || !video.srcObject.active) {
+                        alert("Camera is not active. Please refresh and allow camera access to send messages.");
+                        return;
+                    }
+
+                    if (message.length === 0) {
+                        alert("Please enter a message.");
+                        return;
+                    }
+
+                    let videoWidth = video.videoWidth;
+                    let videoHeight = video.videoHeight;
+                    let startX = 0;
+                    let startY = 0;
+                    let squareLength = Math.min(videoWidth, videoHeight);
+
+                    if (videoWidth > videoHeight) {
+                        startX = (videoWidth - videoHeight) / 2;
+                    } else {
+                        startY = (videoHeight - videoWidth) / 2;
+                    }
+
+                    context.drawImage(video, startX, startY, squareLength, squareLength, 0, 0, canvas.width, canvas.height);
+                    var imageDataUrl = canvas.toDataURL('image/png');
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/convert_to_sketch",  // The only difference is the URL
+                        data: {
+                            image: imageDataUrl,
+                            message: message
+                        },
+                        success: function(response) {
+                            console.log("Response from convert_to_sketch:", response);
+                            appendNewMessage(response.photo, response.message, response.username, response._id);
+                        },
+                        error: function(error) {
+                            console.error("Error sending image for sketching", error);
+                        }
+                    });
+
+                    $('#message-input').val('');
+                }
+
+                function cartoonAndSendMessage() {
+                    var canvas = $('#canvas').get(0);
+                    var context = canvas.getContext('2d');
+                    var video = $('#video').get(0);
+                    var message = $('#message-input').val().trim();
+
+                    if (!video.srcObject || !video.srcObject.active) {
+                        alert("Camera is not active. Please refresh and allow camera access to send messages.");
+                        return;
+                    }
+
+                    if (message.length === 0) {
+                        alert("Please enter a message.");
+                        return;
+                    }
+
+                    let videoWidth = video.videoWidth;
+                    let videoHeight = video.videoHeight;
+                    let startX = 0;
+                    let startY = 0;
+                    let squareLength = Math.min(videoWidth, videoHeight);
+
+                    if (videoWidth > videoHeight) {
+                        startX = (videoWidth - videoHeight) / 2;
+                    } else {
+                        startY = (videoHeight - videoWidth) / 2;
+                    }
+
+                    context.drawImage(video, startX, startY, squareLength, squareLength, 0, 0, canvas.width, canvas.height);
+                    var imageDataUrl = canvas.toDataURL('image/png');
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/convert_to_cartoon",  // The only difference is the URL
+                        data: {
+                            image: imageDataUrl,
+                            message: message
+                        },
+                        success: function(response) {
+                            console.log("Response from convert_to_cartonn:", response);
+                            appendNewMessage(response.photo, response.message, response.username, response._id);
+                        },
+                        error: function(error) {
+                            console.error("Error sending image for cartooning", error);
+                        }
+                    });
+
+                    $('#message-input').val('');
+                }
+
+
             //function for the delete button
             function deleteMessage(messageId) {
-                console.log("Deleting message with ID:", messageId);
+                // Convert messageId to a string if it's an object
+                var messageIdStr = (typeof messageId === 'object') ? messageId.toString() : messageId;
+
+                console.log("Deleting message with ID:", messageIdStr);
+                
                 $.ajax({
                     type: "POST",
-                    url: `/delete_message/${messageId}`,
+                    url: `/delete_message/${messageIdStr}`,
                     success: function(response) {
                         console.log("Message deleted successfully");
-                        $(`#message-${messageId}`).remove(); // Remove the message element from the chatroom
+                        $(`#message-${messageIdStr}`).remove(); // Remove the message element from the chatroom
                     },
                     error: function(error) {
                         console.error("Error deleting message", error);
                     }
                 });
             }
+
 
 
             var lastMessageTimestamp = 0; // Initialize the timestamp
@@ -253,13 +365,31 @@
                         alert("Camera access is needed to send messages.");
                         $('#camera-off-placeholder').show();
                     });
-        
-                $('#capture').click(sendMessageImage);
-        
-                $('#message-input').keypress(function(e) {
-                    if (e.which == 13) {
-                        e.preventDefault();
+                
+
+
+                $('#capture').click(function() {
+                    if ($('#option-checkbox').is(':checked')) {
+                        // TODO: replace the function here to swap
+                        sketchAndSendMessage();
+                        //cartoonAndSendMessage();
+                    } else {
                         sendMessageImage();
+                    }
+                });
+                
+
+                $(document).keypress(function(e) {
+                    if (e.which == 13) {
+                        if ($('#option-checkbox').is(':checked')) {
+                            // TODO: replace the function here as well
+                            sketchAndSendMessage();
+                            //cartoonAndSendMessage();
+                            
+                        } else {
+                            sendMessageImage();
+                        }
+                        e.preventDefault();
                     }
                 });
         
