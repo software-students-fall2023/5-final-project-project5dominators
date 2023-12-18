@@ -5,6 +5,7 @@ from bson import json_util
 from datetime import datetime
 import base64
 import json
+import cv2
 
 
 app = Flask(__name__)
@@ -83,9 +84,6 @@ def delete_message(message_id):
         return jsonify({'status': 'success', 'message': 'Message deleted'})
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)})
-
-
-
 
 @app.route('/logout')
 def logout():
