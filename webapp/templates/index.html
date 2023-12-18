@@ -16,7 +16,6 @@
                     <a href="https://github.com/software-students-fall2023/5-final-project-project5dominators"> 
                         <button class="logo-btn">Snap&Chat</button>
                     </a>
-                    <button id="sketch-send">Sketch & Send</button>
                 </div>
 
                 <div class="sign-out">
@@ -125,6 +124,11 @@
 
             <div class="footer">
                 <input type="text" id="message-input" placeholder="Type a message...">
+                <label class="custom-checkbox">
+                    Filter
+                    <input type="checkbox" id="option-checkbox">
+                    <span class="checkmark"></span>
+                </label>
                 <button id="capture">Snap&Send</button>
             </div>
         </div>
@@ -312,13 +316,22 @@
                         $('#camera-off-placeholder').show();
                     });
         
-                $('#capture').click(sendMessageImage);
-                $('#sketch-send').click(sketchAndSendMessage);
-        
-                $('#message-input').keypress(function(e) {
+                $('#capture').click(function(){
+                    if ($('#option-checkbox').is(':checked')) {
+                        sketchAndSendMessage();
+                    } else {
+                        sendMessageImage();
+                    }
+                });
+
+                $(document).keypress(function(e) {
                     if (e.which == 13) {
                         e.preventDefault();
-                        sendMessageImage();
+                        if ($('#option-checkbox').is(':checked')) {
+                            sketchAndSendMessage();
+                        } else {
+                            sendMessageImage();
+                        }
                     }
                 });
         
