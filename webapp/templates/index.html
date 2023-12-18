@@ -183,8 +183,21 @@
                     alert("Please enter a message.");
                     return;
                 }
-        
-                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                let videoWidth = video.videoWidth;
+                let videoHeight = video.videoHeight;
+                let startX = 0;
+                let startY = 0;
+                let squareLength = Math.min(videoWidth, videoHeight);
+    
+                if (videoWidth > videoHeight) {
+                    startX = (videoWidth - videoHeight) / 2;
+                } else {
+                    startY = (videoHeight - videoWidth) / 2;
+                }
+
+                context.drawImage(video, startX, startY, squareLength, squareLength, 0, 0, canvas.width, canvas.height);
+
                 var imageDataUrl = canvas.toDataURL('image/png');
         
                 $.ajax({
