@@ -56,22 +56,18 @@ jobs:
   deployment-on-droplet:
     needs: deployment-on-dockerHub
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up SSH
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.DROPLET_SSH_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H 165.227.106.8 >> ~/.ssh/known_hosts
+    - name: Install sshpass
+      run: sudo apt-get install -y sshpass
 
     - name: Deploy to Droplet
+      env:
+        DROPLET_PASSWORD: ${{ secrets.DROPLET_PASSWORD }}
       run: |
-        ssh -o StrictHostKeyChecking=no root@165.227.106.8 'cd 5-final-project-project5dominators && docker-compose down && docker-compose up -d'
-
+        sshpass -p $DROPLET_PASSWORD ssh -o StrictHostKeyChecking=no user@your_droplet_ip "cd 5-final-project-project5dominators && docker-compose down && docker-compose up -d"
 
 
 
