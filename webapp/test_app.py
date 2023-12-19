@@ -101,7 +101,46 @@ def test_post_message(client, mocked_mongo):
         assert data['message'] == 'Hello, world!'
 
 
+def test_logout(client, mocked_mongo):
+    with client:
+        client.post('/login', data={'username': 'testuser'}, follow_redirects=True)
+
+        response = client.get('/logout', follow_redirects=True)
+
+        assert response.status_code == 200
+        assert b'login' in response.data
+
+        with client.session_transaction() as session:
+            assert 'username' not in session
 
 
+def test_convert_to_sketch(client, mocked_mongo):
+    with client:
+        client.post('/login', data={'username': 'testuser'}, follow_redirects=True)
+        response = client.post('/convert_to_sketch', data={
+            'message': 'Sketch me!',
+            'image': BASE64_IMAGE
+        })
+        assert response.status_code == 200
+        data = json.loads(response.data)
+        assert 'message' in data
+        assert data['message'] == 'Sketch me!'
+        assert 'photo' in data
+        assert data['photo'].startswith('data:image/jpeg;base64,')
+
+
+def test_convert_to_cartoon(client, mocked_mongo):
+    with client:
+        client.post('/login', data={'username': 'testuser'}, follow_redirects=True)
+        response = client.post('/convert_to_cartoon', data={
+            'message': 'Cartoonize me!',
+            'image': BASE64_IMAGE
+        })
+        assert response.status_code == 200
+        data = json.loads(response.data)
+        assert 'message' in data
+        assert data['message'] == 'Cartoonize me!'
+        assert 'photo' in data
+        assert data['photo'].startswith('data:image/jpeg;base64,')
 
 
