@@ -26,10 +26,6 @@ Persistent Chat History: The chat history is stored in a MongoDB database, allow
 
 [link to the image on DockerHub ](https://hub.docker.com/repository/docker/hyteve/snap-and-chat/general)
 
-[Link to Server IP]() (Impractical. Because accessing by IP is limited to HTTP, but most browser would not allow camera access in HTTP websites, which disables the core functionality for our website. )
-
-Link to domain: 
-
 ## Configuration Instructions
 - download dockerhub
 - clone the repository
@@ -38,6 +34,11 @@ Link to domain:
 
 ## Deployed WebApp Link
 
+[Impractical Link to Server IP]() : 
+Because accessing by IP is limited to HTTP, but most browser would not allow camera access in HTTP websites, which disables the core functionality for our website. But it does satisfies the project requirement :)
+
+Inactive Link to domain: snap-and-chat.com
+We purchased this domain in order to use HTTPS. While setting up redirection routes, we realized that it needs a SSL certificate to work in HTTPS. We have again purchased a certification for the website, but it is still pending and probably won't be approved in a few days :(
 
 ## Team Members
 - [Ethan Sha](https://github.com/EthanSha111)

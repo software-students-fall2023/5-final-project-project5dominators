@@ -4,7 +4,7 @@ services:
   app:
     build: ./webapp
     ports:
-      - "5001:5000"
+      - "5000:5000"
     environment:
       - MONGO_URI=mongodb+srv://ys4323:Syysyysyy1@cluster0.ocmpb3f.mongodb.net
       - SECRET_KEY=ys4323
