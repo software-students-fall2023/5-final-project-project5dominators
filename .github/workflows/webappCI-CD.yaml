@@ -12,17 +12,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      -
-    - name: Run Pytest
-      run: |
-        pytest
 
     - name: Build Docker Image in Webapp Directory
       run: |
         cd webapp
         docker build -t webapp .
 
-
+    - name: Run Pytest
+      run: |
+        pytest
 
 
 
