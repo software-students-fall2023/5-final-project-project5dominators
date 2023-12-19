@@ -5,7 +5,7 @@ import json
 
 
 BASE64_IMAGE = "data:image/png;base64," \
-               "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR42mP8z8BQDwAEhQF8kl4nOgAAAABJRU5ErkJggg== "
+               "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAFAIB/yvCJyUAAAAASUVORK5CYII="
 
 
 @pytest.fixture
@@ -100,6 +100,35 @@ def test_post_message(client, mocked_mongo):
         assert 'message' in data
         assert data['message'] == 'Hello, world!'
 
+
+def test_convert_to_sketch(client, mocked_mongo):
+    with client:
+        client.post('/login', data={'username': 'testuser'}, follow_redirects=True)
+        response = client.post('/convert_to_sketch', data={
+            'message': 'Sketch me!',
+            'image': BASE64_IMAGE
+        })
+        assert response.status_code == 200
+        data = json.loads(response.data)
+        assert 'message' in data
+        assert data['message'] == 'Sketch me!'
+        assert 'photo' in data
+        assert data['photo'].startswith('data:image/jpeg;base64,')
+
+
+def test_convert_to_cartoon(client, mocked_mongo):
+    with client:
+        client.post('/login', data={'username': 'testuser'}, follow_redirects=True)
+        response = client.post('/convert_to_cartoon', data={
+            'message': 'Cartoonize me!',
+            'image': BASE64_IMAGE
+        })
+        assert response.status_code == 200
+        data = json.loads(response.data)
+        assert 'message' in data
+        assert data['message'] == 'Cartoonize me!'
+        assert 'photo' in data
+        assert data['photo'].startswith('data:image/jpeg;base64,')
 
 
 
