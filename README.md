@@ -58,6 +58,15 @@ As a result, please use the instructions in the following section to access our 
 - visit the website on `http://localhost:5000` (Please make sure Carplay is turned off if you are using MacOS, as it will occupy port 5000)
 
 
+
+# TODO:
+
+[instructions for how to configure and run all parts of your project for any developer on any platform - these instructions must work!]
+
+[instructions for how to set up any environment variables and import any starter data into the database, as necessary, for the system to operate correctly when run.]
+
+
+
 ## Team Members
 - [Ethan Sha](https://github.com/EthanSha111)
 - [Ashley Luo](https://github.com/luoashley)
