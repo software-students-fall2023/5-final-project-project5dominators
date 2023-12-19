@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   app:
-    build: ./webapp
+    image: hyteve/snap-and-chat:latest
     ports:
       - "5001:5000"
     environment:

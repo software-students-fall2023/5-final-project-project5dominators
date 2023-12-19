@@ -23,7 +23,13 @@ jobs:
         cd webapp
         docker run --rm webapp pytest
 
+    - name: Run Pytest with Coverage Check
+      run: |
+        cd webapp
+        docker run --rm webapp pytest --cov=./ --cov-report=term --cov-fail-under=80
+
   deployment-on-dockerHub:
+    needs: build-and-test
     runs-on: ubuntu-latest
 
     steps: 
@@ -41,6 +47,25 @@ jobs:
         file: ./webapp/Dockerfile
         push: true
         tags: hyteve/snap-and-chat:latest
+
+  deployment-on-droplet:
+    needs: deployment-on-dockerHub
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.DROPLET_SSH_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H 165.227.106.8 >> ~/.ssh/known_hosts
+
+    - name: Deploy to Droplet
+      run: |
+        ssh -o StrictHostKeyChecking=no root@165.227.106.8 'cd 5-final-project-project5dominators && docker-compose down && docker-compose up -d'
 
 
 
