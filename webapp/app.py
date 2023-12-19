@@ -5,14 +5,20 @@ from bson import json_util
 from datetime import datetime
 import numpy as np
 import base64
+import os
 import json
 import cv2
 
 
 app = Flask(__name__)
+secret_key = os.getenv('SECRET_KEY')
+mongo_uri = os.getenv('MONGO_URI')
+
 # MongoDB connection setup
-client = MongoClient("mongodb+srv://ys4323:Syysyysyy1@cluster0.ocmpb3f.mongodb.net/")
-app.secret_key = 'ys4323'
+client = MongoClient(mongo_uri)
+
+# Set the secret key for Flask session
+app.secret_key = secret_key
 db = client.SnapChat
 users = db.User
 
@@ -185,4 +191,4 @@ def logout():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
