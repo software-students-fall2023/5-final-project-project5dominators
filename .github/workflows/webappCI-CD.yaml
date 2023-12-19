@@ -20,7 +20,9 @@ jobs:
 
     - name: Run Pytest
       run: |
-        pytest
+        cd webapp
+        docker run --rm webapp pytest
+
 
 
 
