@@ -23,6 +23,7 @@ Persistent Chat History: The chat history is stored in a MongoDB database, allow
 
 
 ## Links
+
 [link to the image on DockerHub ](https://hub.docker.com/repository/docker/hyteve/snap-and-chat/general)
 
 ## Configuration Instructions
