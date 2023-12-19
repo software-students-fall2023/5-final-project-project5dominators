@@ -7,7 +7,7 @@ This project involves the development of a unique chat application named "Snap&C
 
 The full scope of this app is to function like most chatting apps where users can add friends, DM and create group chats. Due to time limitaion, we decided to implement the core functionality where this app stands out the most. Thus, we created a public chatroom, where user can join and drop messages along with their selfies in the chat. 
 
-# Key Functionalities:
+## Key Functionalities:
 
 Live Camera Integration: Users can access their camera directly from the chat interface. This feature is essential for capturing selfies that are sent along with messages, promoting a more genuine and engaging communication experience.
 
@@ -42,13 +42,14 @@ Function to pick any username and appear next to chat bubbles
 
 Link to server IP (Useless): http://165.227.106.8:5000/
 
-Because accessing by IP is limited to HTTP, and most browser would not allow camera access on HTTP websites, which disables the core functionality for our website. But it does satisfies the project requirement  :)
+Because accessing by IP is limited to HTTP, and most browsers only allow camera access on HTTPS websites, our app's core functionality of using camera is gone when using IP address. But it does fulfill the project requirement  :)
 
 Link to domain (Inactive): https://snap-and-chat.com
 
-We actually purchased this domain in order to use HTTPS. While setting up redirection routes, we realized that it needs a SSL certificate to work in HTTPS. We have again purchased a certification for the website, but it is still pending and probably won't be approved in a few days  :(
+We actually purchased this domain in order to use HTTPS. While setting up redirection routes, we realized that a website needs a SSL certificate to work in HTTPS. We have again purchased a certification for the website, but it is still pending and probably won't be approved in a few days  :(
 
-As a result, please use the instructions in the following sections to access our app. 
+
+As a result, please use the instructions in the following section to access our app. 
 
 ## Configuration Instructions
 - download dockerhub
