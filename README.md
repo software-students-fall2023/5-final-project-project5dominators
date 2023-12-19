@@ -3,9 +3,9 @@
 
 ## Project Overview
 
-This project involves the development of a unique chat application named "Snap&Chat". The core functionality of this application centers around the integration of real-time messaging with an innovative feature: users are required to send a selfie along with their text messages. This is achieved through a live camera feed, ensuring an interactive and authentic chatting experience. 
+This project involves the development of a unique chat application named "Snap&Chat". The core functionality of this application centers around the integration of real-time messaging with an innovative feature: users are required to send a selfie along with their text messages. This is achieved through a live camera feed, ensuring an interactive and authentic chatting experience. With thoughtful design shoices in UI/UX, as well as a modern and polished styling design, we aim to bring our users a relaxing and fun chatting experience. 
 
-The full scope of this app is to function like most chatting apps where users can add friends, DM and create group chats. Due to time limitaion, we decided to implement the core functionality where this app stands out the most. Thus, we created a public chatroom, where user can join and drop messages along with their selfies in the chat. 
+The full scope of this app is to function like most chatting apps where users can add friends, DM and create group chats. Due to time limitaion, we decided to implement the core functionality that makes this app stands out the most. Thus, we created a public chatroom, where users can join and drop messages along with their selfies in the chat. 
 
 ## Key Functionalities:
 
