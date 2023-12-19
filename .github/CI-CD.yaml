@@ -1,0 +1,25 @@
+name: Python CI/CD with Docker in Webapp Directory
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build Docker Image in Webapp Directory
+      run: |
+        cd web-app
+        docker build -t myapp:test .
+
+    - name: Run Pytest in Docker in Webapp Directory
+      run: |
+        cd web-app
+        pip install pytest-mock
+        docker run --rm myapp:test pytest

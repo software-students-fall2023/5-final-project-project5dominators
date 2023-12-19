@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGO_HOST=mongo
+      - MONGO_PORT=27017
+      - MONGO_DB=ys4323
+      - MONGO_USER=ys4323
+      - MONGO_PASSWORD=Syysyysyy1
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=ys4323
+      - MONGO_INITDB_ROOT_PASSWORD=Syysyysyy1

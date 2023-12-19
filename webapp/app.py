@@ -11,7 +11,9 @@ import cv2
 
 app = Flask(__name__)
 # MongoDB connection setup
+
 client = MongoClient("mongodb+srv://ys4323:Syysyysyy1@cluster0.ocmpb3f.mongodb.net/")
+
 app.secret_key = 'ys4323'
 db = client.SnapChat
 users = db.User
