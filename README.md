@@ -40,10 +40,12 @@ Function to pick any username and appear next to chat bubbles
 
 ## Deployed WebApp Link
 
-[Impractical Link to Server IP]() : http://165.227.106.8:5000/
+Link to server IP (Useless): http://165.227.106.8:5000/
+
 Because accessing by IP is limited to HTTP, and most browser would not allow camera access on HTTP websites, which disables the core functionality for our website. But it does satisfies the project requirement  :)
 
-Inactive Link to domain: snap-and-chat.com
+Link to domain (Inactive): https://snap-and-chat.com
+
 We actually purchased this domain in order to use HTTPS. While setting up redirection routes, we realized that it needs a SSL certificate to work in HTTPS. We have again purchased a certification for the website, but it is still pending and probably won't be approved in a few days  :(
 
 As a result, please use the instructions in the following sections to access our app. 
