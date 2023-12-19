@@ -104,7 +104,12 @@ def convert_to_sketch():
     image_data = request.form['image']
     # Decode the image from base64
     encoded_data = image_data.split(',')[1]
-    nparr = np.fromstring(base64.b64decode(encoded_data), np.uint8)
+    nparr = np.frombuffer(base64.b64decode(encoded_data), np.uint8)
+
+    # Check if the image data is not empty
+    if not nparr.size > 0:
+        return jsonify({'error': 'Invalid image data'}), 400
+
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
     # Convert to grayscale
@@ -143,7 +148,12 @@ def convert_to_cartoon():
     
     # Decode the image from base64
     encoded_data = image_data.split(',')[1]
-    nparr = np.fromstring(base64.b64decode(encoded_data), np.uint8)
+    nparr = np.frombuffer(base64.b64decode(encoded_data), np.uint8)
+
+    # Check if the image data is not empty
+    if not nparr.size > 0:
+        return jsonify({'error': 'Invalid image data'}), 400
+
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
     # Convert to grayscale
