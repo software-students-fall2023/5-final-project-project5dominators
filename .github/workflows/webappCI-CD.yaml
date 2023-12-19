@@ -21,7 +21,7 @@ jobs:
     - name: Run Pytest in Docker in Webapp Directory
       run: |
         cd webapp
-        docker run pytest
+        docker run --rm webapp:test pytest
 
 
 
