@@ -4,6 +4,10 @@ from bson import ObjectId
 import json
 
 
+BASE64_IMAGE = "data:image/png;base64," \
+               "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR42mP8z8BQDwAEhQF8kl4nOgAAAABJRU5ErkJggg== "
+
+
 @pytest.fixture
 def app():
     app = flask_app
@@ -95,4 +99,7 @@ def test_post_message(client, mocked_mongo):
         data = json.loads(response.data)
         assert 'message' in data
         assert data['message'] == 'Hello, world!'
+
+
+
 
