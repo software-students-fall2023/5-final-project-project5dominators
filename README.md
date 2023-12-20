@@ -54,8 +54,6 @@ As a result, please use the instructions in the following section to access our 
 ## Configuration Instructions
 - download dockerhub
 - clone the repository
-- cd to the main directory and run  `docker-compose up --build`
-- visit the website on `http://localhost:5000` (Please make sure Carplay is turned off if you are using MacOS, as it will occupy port 5000)
 
 
 
@@ -65,6 +63,22 @@ As a result, please use the instructions in the following section to access our 
 
 [instructions for how to set up any environment variables and import any starter data into the database, as necessary, for the system to operate correctly when run.]
 
+## How to run
+### Prerequisites
+    1. [Python](https://www.python.org/downloads/windows/)
+    2. [Docker](https://docs.docker.com/engine/install/)
+    3. [Docker Compose](https://docs.docker.com/compose/install/)
+    4. [MongoDB] (https://www.mongodb.com/docs/manual/installation/)
+        *For MongoDB, If you use MongoDB Cluster, ignore it.
+
+
+### Bash Mac & Linux, Terminal Windows
+`
+     git clone https://github.com/software-students-fall2023/5-final-project-project5dominators
+     cd 5-final-project-project5dominators
+     docker-compose up --build
+     visit the website on `http://localhost:5000` (Please make sure Carplay is turned off if you are using MacOS, as it will occupy port 5000)
+`
 
 
 ## Team Members
