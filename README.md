@@ -51,10 +51,16 @@ We actually purchased this domain in order to use HTTPS. While setting up redire
 
 As a result, please use the instructions in the following section to access our app. 
 
-## Configuration Instructions
-- download dockerhub
-- clone the repository
-
+## How to confiure
+```
+- git clone https://github.com/software-students-fall2023/5-final-project-project5dominators
+- cd 5-final-project-project5dominators
+```
+- Replace the following values with your MongoDB URI and secret key in app.py
+```
+MONGODB_URI = "your_mongodb_uri"
+SECRET_KEY = "your_secret_key"
+```
 
 
 # TODO:
@@ -63,23 +69,54 @@ As a result, please use the instructions in the following section to access our 
 
 [instructions for how to set up any environment variables and import any starter data into the database, as necessary, for the system to operate correctly when run.]
 
+## How to setup enviroment
+### Ensure you have the required software installed:
+- [Python](https://www.python.org/downloads/windows/)
+- [Docker](https://docs.docker.com/engine/install/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+- [MongoDB](https://www.mongodb.com/docs/manual/installation/)
+    *For MongoDB, If you use MongoDB Cluster, ignore it.*
+
 ## How to run
-### Prerequisites
-    1. [Python](https://www.python.org/downloads/windows/)
-    2. [Docker](https://docs.docker.com/engine/install/)
-    3. [Docker Compose](https://docs.docker.com/compose/install/)
-    4. [MongoDB] (https://www.mongodb.com/docs/manual/installation/)
-        *For MongoDB, If you use MongoDB Cluster, ignore it.
+### Bash (Mac & Linux) / Command Prompt (Windows)
+
+```
+docker-compose up --build
+visit the website on `http://localhost:5000` (Please make sure Carplay is turned off if you are using MacOS, as it will occupy port 5000)
+```
+
+## TESTING
+
+Run tests using pytest:
+```
+pytest
+```
+
+## Importing Starter Data
+- If your system relies on starter data, provide a script or instructions for importing it into the database: <br/>
+`python import_data.py`
 
 
-### Bash Mac & Linux, Terminal Windows
-`
-     git clone https://github.com/software-students-fall2023/5-final-project-project5dominators
-     cd 5-final-project-project5dominators
-     docker-compose up --build
-     visit the website on `http://localhost:5000` (Please make sure Carplay is turned off if you are using MacOS, as it will occupy port 5000)
-`
+## Usage
+### Live Camera Integration
 
+    Access the camera directly from the chat interface.
+    Tick the "filter" checkbox for additional image processing options.
+
+### Image Processing Capabilities
+
+    Sketch Effect: Convert selfies into a sketch format.
+    Cartoon Effect: Transform selfies into cartoon-style images.
+
+### Additional Functionalities
+
+    Message Deletion: Delete messages from the chat.
+    Persistent Chat History: Stored in the MongoDB database.
+    Prevent Spamming: Functionality to delete any message in the chatroom.
+    Send Message/Selfie: Click the button or press Enter.
+    Camera Status Detection: Prevent sending messages if the camera is not on.
+    Join/Leave Chatroom: Toggle your presence in the chat.
+    Choose Username: Pick any username to appear next to chat bubbles.
 
 ## Team Members
 - [Ethan Sha](https://github.com/EthanSha111)
