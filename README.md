@@ -51,6 +51,20 @@ We actually purchased this domain in order to use HTTPS. While setting up redire
 
 As a result, please use the instructions in the following section to access our app. 
 
+## How to setup enviroment
+### Ensure you have the required software installed:
+- [Python](https://www.python.org/downloads/windows/)
+- [Docker](https://docs.docker.com/engine/install/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+- [MongoDB](https://www.mongodb.com/docs/manual/installation/)
+    *For MongoDB, If you use MongoDB Cluster, ignore it.* Follow here [MongoDB cluster](https://www.mongodb.com/docs/guides/atlas/cluster/) 
+```
+python --version
+docker --version
+docker-compose --version
+mongo --version  # Check MongoDB installation
+```
+
 ## How to confiure
 ```
 - git clone https://github.com/software-students-fall2023/5-final-project-project5dominators
@@ -62,20 +76,6 @@ MONGODB_URI = "your_mongodb_uri"
 SECRET_KEY = "your_secret_key"
 ```
 
-
-# TODO:
-
-[instructions for how to configure and run all parts of your project for any developer on any platform - these instructions must work!]
-
-[instructions for how to set up any environment variables and import any starter data into the database, as necessary, for the system to operate correctly when run.]
-
-## How to setup enviroment
-### Ensure you have the required software installed:
-- [Python](https://www.python.org/downloads/windows/)
-- [Docker](https://docs.docker.com/engine/install/)
-- [Docker Compose](https://docs.docker.com/compose/install/)
-- [MongoDB](https://www.mongodb.com/docs/manual/installation/)
-    *For MongoDB, If you use MongoDB Cluster, ignore it.*
 
 ## How to run
 ### Bash (Mac & Linux) / Command Prompt (Windows)
