@@ -113,3 +113,4 @@ pytest
 - [Ethan Sha](https://github.com/EthanSha111)
 - [Ashley Luo](https://github.com/luoashley)
 - [Steve Hai](https://github.com/Hyteve)
+- [Merry Cui](https://github.com/merrylearninggithub)
