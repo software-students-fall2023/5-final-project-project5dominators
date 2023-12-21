@@ -70,11 +70,6 @@ mongo --version  # Check MongoDB installation
 - git clone https://github.com/software-students-fall2023/5-final-project-project5dominators
 - cd 5-final-project-project5dominators
 ```
-- Replace the following values with your MongoDB URI and secret key in app.py
-```
-MONGODB_URI = "your_mongodb_uri"
-SECRET_KEY = "your_secret_key"
-```
 
 
 ## How to run
@@ -92,10 +87,6 @@ Run tests using pytest:
 pytest
 ```
 
-## Importing Starter Data
-- If your system relies on starter data, provide a script or instructions for importing it into the database: <br/>
-`python import_data.py`
-
 
 ## Usage
 ### Live Camera Integration
@@ -105,7 +96,7 @@ pytest
 
 ### Image Processing Capabilities
 
-    Sketch Effect: Convert selfies into a sketch format.
+    Sketch Effect: Convert selfies into a sketch format. (Currently Active)
     Cartoon Effect: Transform selfies into cartoon-style images.
 
 ### Additional Functionalities
