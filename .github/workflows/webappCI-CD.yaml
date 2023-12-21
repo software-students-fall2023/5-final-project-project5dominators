@@ -1,0 +1,79 @@
+name: Python CI/CD with Docker in Webapp Directory
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build Docker Image in Webapp Directory
+      run: |
+        cd webapp
+        docker build -t webapp .
+
+    - name: Run Pytest
+      run: |
+        cd webapp
+        docker run --rm webapp pytest
+        
+    - name: Run Pytest with Coverage Check
+      run: |
+        cd webapp
+        docker run --rm webapp pytest --cov=./ --cov-report=term --cov-fail-under=80
+
+    - name: Run Pytest with Coverage Check
+      run: |
+        cd webapp
+        docker run --rm webapp pytest --cov=./ --cov-report=term --cov-fail-under=80
+
+  deployment-on-dockerHub:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+
+    steps: 
+    - uses: actions/checkout@v3
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+        
+    - name: Deploy on Docker Hub
+      uses: docker/build-push-action@v3
+      with:
+        context: ./webapp
+        file: ./webapp/Dockerfile
+        push: true
+        tags: hyteve/snap-and-chat:latest
+
+  deployment-on-droplet:
+    needs: deployment-on-dockerHub
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install sshpass
+      run: sudo apt-get install -y sshpass
+
+    - name: Deploy to Droplet
+      env:
+        DROPLET_PASSWORD: ${{ secrets.DROPLET_PASSWORD }}
+      run: |
+        sshpass -p $DROPLET_PASSWORD ssh -o StrictHostKeyChecking=no root@165.227.106.8 "cd 5-final-project-project5dominators && git pull origin main && docker-compose down && docker-compose up --build -d"
+
+
+
+
+
+
+
+
+     

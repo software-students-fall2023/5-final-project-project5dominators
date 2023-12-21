@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Snap&Chat</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+        <link href="{{ url_for('static', filename='login.css') }}" rel="stylesheet" type="text/css">
+
+
+    </head>
+    <body>
+        <div class="grid-container">
+            <div class="header">
+            </div>
+
+            <div class="login">
+                <div class="wrapper">
+
+                    <div class="logo">
+                        <a> 
+                            <button class="logo-btn">Snap&Chat</button>
+                        </a>
+                    </div>
+
+
+                    <!-- <h2>Welcome to the REAL Snapchat!</h2> -->
+                    <!-- <p>Welcome! </p> -->
+    
+                    <!-- TODO: Replace action with backend login processing -->
+                    <form action="/login" method="post"> 
+                        <input type="text" id="username" name="username" placeholder="Username" required>
+                        <button type="submit" id="login-btn">Join</button>
+                    </form>
+                    {% if error %}
+                        <p id="error-message" style="color: red;">{{ error }}</p>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+        
+
+    </body>
+</html>
