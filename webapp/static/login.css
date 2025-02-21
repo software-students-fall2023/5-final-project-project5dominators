@@ -1,0 +1,156 @@
+html {
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 0;
+}
+
+body{
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    font-family: Andalé Mono, monospace;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 0;
+    background-color: white;
+}
+
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto 20em auto;
+    grid-template-rows: 5em auto 5em;
+    grid-row-gap: 0;
+    grid-column-gap: 0;
+    position: fixed;
+    grid-template-areas:
+    "header header header"
+    "left login right"
+    "footer footer footer";
+    height: 100%;
+    width: 100%;
+    margin: 0;
+
+}
+
+.header {
+    grid-area: header;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background-color: white;
+    margin: 0;
+    font-size: large;
+}
+
+
+.login {
+    grid-area: login;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    margin: 0;
+    font-size: large;
+    width: 100%;
+    position:absolute;
+}
+
+.wrapper {
+    padding: 60px 50px 60px 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0 0;
+    margin-top: 70%;
+    border : 1px solid #ddd;   
+    border-radius: 40px;
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.2);
+    /* background-color: #f9f9f9; */
+}
+
+.logo{
+    margin:0;
+    margin-bottom: 60px;
+    padding: 0;
+}
+
+.logo-btn {
+    background: none;
+    border: none;
+    color: #007bff;
+    font-size:2.9em;
+    font-weight: bold;
+    font-family: Andalé Mono, monospace;
+    margin: 0;
+    padding: 0;
+    letter-spacing: 1px;
+}
+
+
+h2{
+    font-size: 1.7em;
+    text-align: center;
+    width: 100%;
+    margin: 0 0 30px 0; 
+    padding: 0 30px;
+    width: 100%;
+}
+
+p{
+    font-size: 0.95em;
+    letter-spacing: 0.01px;
+    text-align: center;
+    width: 100%;
+    margin: 0 0 40px 0; 
+
+}
+
+form{
+    width: 100%
+}
+
+
+#username {
+    padding: 13px;
+
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    outline: none;
+    font-size: medium;
+    background-color: white;
+    width: calc(100% - 26px);
+    display: block;
+    margin-bottom: 20px;
+}
+
+#login-btn {
+    padding: 15px 13px;
+    font-size:medium;
+    background-color: #007bff; /* Bootstrap primary color */
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    margin: 0;
+    letter-spacing: 1px;
+    width: 100%;
+    display: block;
+}
+
+#login-btn:hover {
+    background-color: #005cbf; /* Darker shade on hover */
+}
+

@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  app:
+    build: ./webapp
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGO_URI=mongodb+srv://ys4323:Syysyysyy1@cluster0.ocmpb3f.mongodb.net
+      - SECRET_KEY=ys4323
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
