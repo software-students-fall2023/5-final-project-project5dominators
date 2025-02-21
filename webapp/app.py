@@ -14,7 +14,7 @@ app = Flask(__name__)
 
 
 # MongoDB connection setup
-client = MongoClient("mongodb+srv://ys4323:Syysyysyy1@cluster0.ocmpb3f.mongodb.net")
+client = MongoClient("mongodb+srv://hyteve:16891689@cluster0.gztpl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 
 # Set the secret key for Flask session
 app.secret_key = "ys4323"

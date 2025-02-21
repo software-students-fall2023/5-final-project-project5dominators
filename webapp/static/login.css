@@ -27,7 +27,7 @@ body{
 .grid-container {
     display: grid;
     grid-template-columns: auto 20em auto;
-    grid-template-rows: 6em auto 4.5em;
+    grid-template-rows: 5em auto 5em;
     grid-row-gap: 0;
     grid-column-gap: 0;
     position: fixed;
